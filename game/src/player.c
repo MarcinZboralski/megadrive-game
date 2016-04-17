@@ -45,7 +45,7 @@ void TAKE_VEHICLES_BEHAVIOUR_Update(smeEntity* entity, void* component)
             fix32 distance;
             smeEntity* target = smeWORLD_FindNearestEntity(&distance, entity);
             if (distance<FIX32(30.0f) && target->Graphics->Sprite->Source==&truck)
-            {/*
+            {
                 entity->Transform->PositionX = target->Transform->PositionX;
                 entity->Transform->PositionY = target->Transform->PositionY;
                 entity->Transform->Rotation = target->Transform->Rotation;
@@ -57,10 +57,9 @@ void TAKE_VEHICLES_BEHAVIOUR_Update(smeEntity* entity, void* component)
                 smePHYSICS_VEHICLE_Create(entity);
                 smeCONTROLLER_PAD_VEHICLE_Create(entity);
                 smeGRAPHICS_Create(entity, target->Graphics->Sprite->Source, target->Graphics->Width, target->Graphics->Height, PAL3);
-                */
-
-				smeENTITY_RemoveComponent(target, target->Graphics);
-                //smeWORLD_DestroyEntity(target);
+                
+				smeWORLD_DestroyEntity(target);
+				//smeENTITY_RemoveComponent(target, target->Graphics);
             }
         }
         else

@@ -70,15 +70,15 @@ smeSprite* smeSPRITE_Create(const SpriteDefinition* source, u8 palette)
 
 void smeSPRITE_Destroy(smeSprite* sprite)
 {
-    //--smeSpritesCount;
+    --smeSpritesCount;
     smeGraphicsSprites[sprite->GraphicsID].visibility = VISIBILITY_ALWAYS_OFF;
-    /*u8 i;
+    u8 i;
     for (i=sprite->ID ; i<smeSpritesCount ; ++i)
     {
         smeSprites[i] = smeSprites[i+1];
         smeSprites[i]->ID = i;
     }
-    MEM_free(sprite);*/
+    MEM_free(sprite);
 }
 
 void smeSPRITE_Update(smeSprite* sprite)
