@@ -90,6 +90,9 @@
     <ClCompile Include="sgdk\src\bmp.c">
       <Filter>sgdk</Filter>
     </ClCompile>
+    <ClCompile Include="sgdk\src\dma.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
     <ClCompile Include="sgdk\src\everdrive.c">
       <Filter>sgdk</Filter>
     </ClCompile>
@@ -186,6 +189,9 @@
     <ClCompile Include="sgdk\src\z80_vgm.c">
       <Filter>sgdk</Filter>
     </ClCompile>
+    <ClCompile Include="sgdk\src\zlib.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\src\player.h">
@@ -273,6 +279,9 @@
       <Filter>sgdk</Filter>
     </ClInclude>
     <ClInclude Include="sgdk\inc\config.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\dma.h">
       <Filter>sgdk</Filter>
     </ClInclude>
     <ClInclude Include="sgdk\inc\everdrive.h">
@@ -387,9 +396,6 @@
       <Filter>sgdk</Filter>
     </ClInclude>
     <ClInclude Include="sgdk\src\z80_drv3.h">
-      <Filter>sgdk</Filter>
-    </ClInclude>
-    <ClInclude Include="sgdk\src\z80_drv4.h">
       <Filter>sgdk</Filter>
     </ClInclude>
     <ClInclude Include="sgdk\src\z80_mvs.h">

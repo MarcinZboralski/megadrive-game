@@ -13,7 +13,6 @@ extern const fix32 fPI74;
 extern const fix32 fPIo4;
 extern const fix32 fSQRT2;
 
-fix32 abs(fix32 v);
 fix32 cos(fix32 a);
 fix32 sin(fix32 a);
 fix32 clamp_angle(fix32 a);     // [-Pi , Pi]

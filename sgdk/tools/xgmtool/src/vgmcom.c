@@ -6,7 +6,7 @@
 #include "../inc/util.h"
 
 
-VGMCommand* VGMCommand_create(int command)
+VGMCommand* VGMCommand_create(int command, int time)
 {
     VGMCommand* result;
 
@@ -17,11 +17,12 @@ VGMCommand* VGMCommand_create(int command)
 
     result->command = command;
     result->size = 1;
+    result->time = time;
 
     return result;
 }
 
-VGMCommand* VGMCommand_createEx(unsigned char* data, int offset)
+VGMCommand* VGMCommand_createEx(unsigned char* data, int offset, int time)
 {
     VGMCommand* result;
 
@@ -32,6 +33,7 @@ VGMCommand* VGMCommand_createEx(unsigned char* data, int offset)
 
     result->command = data[offset] & 0xFF;
     result->size = VGMCommand_computeSize(result);
+    result->time = time;
 
     return result;
 }
@@ -69,9 +71,14 @@ bool VGMCommand_isEnd(VGMCommand* source)
     return source->command == VGM_END;
 }
 
-bool VGMCommand_isLoop(VGMCommand* source)
+bool VGMCommand_isLoopStart(VGMCommand* source)
 {
-    return source->command == VGM_LOOP;
+    return source->command == VGM_LOOP_START;
+}
+
+bool VGMCommand_isLoopEnd(VGMCommand* source)
+{
+    return source->command == VGM_LOOP_END;
 }
 
 bool VGMCommand_isPCM(VGMCommand* source)
@@ -315,12 +322,25 @@ bool VGMCommand_isYM2612KeyOffWrite(VGMCommand* source)
     return VGMCommand_isYM2612KeyWrite(source) && ((VGMCommand_getYM2612Value(source) & 0xF0) == 0x00);
 }
 
+bool VGMCommand_isYM2612KeyOnWrite(VGMCommand* source)
+{
+    return VGMCommand_isYM2612KeyWrite(source) && ((VGMCommand_getYM2612Value(source) & 0xF0) != 0x00);
+}
+
 int VGMCommand_getYM2612KeyChannel(VGMCommand* source)
 {
     if (VGMCommand_isYM2612KeyWrite(source))
-        return VGMCommand_getYM2612Value(source) & 0x7;
+    {
+        int reg = VGMCommand_getYM2612Value(source) & 0x7;
 
-    return 0;
+        if ((reg == 3) || (reg == 7)) return -1;
+
+        if (reg >= 4) reg--;
+
+        return reg;
+    }
+
+    return -1;
 }
 
 bool VGMCommand_isYM26120x2XWrite(VGMCommand* source)
@@ -336,6 +356,21 @@ bool VGMCommand_isYM2612TimersWrite(VGMCommand* source)
 bool VGMCommand_isYM2612TimersNoSpecialNoCSMWrite(VGMCommand* source)
 {
     return VGMCommand_isYM2612TimersWrite(source) && ((VGMCommand_getYM2612Value(source) & 0xC0) == 0x00);
+}
+
+bool VGMCommand_isDACEnabled(VGMCommand* source)
+{
+    return VGMCommand_isYM2612Port0Write(source) && (VGMCommand_getYM2612Register(source) == 0x2B);
+}
+
+bool VGMCommand_isDACEnabledON(VGMCommand* source)
+{
+    return VGMCommand_isDACEnabled(source) && ((VGMCommand_getYM2612Value(source) & 0x80) == 0x80);
+}
+
+bool VGMCommand_isDACEnabledOFF(VGMCommand* source)
+{
+    return VGMCommand_isDACEnabled(source) && ((VGMCommand_getYM2612Value(source) & 0x80) == 0x00);
 }
 
 bool VGMCommand_isStream(VGMCommand* source)
@@ -437,27 +472,67 @@ bool VGMCommand_isSame(VGMCommand* source, VGMCommand* com)
     return !memcmp(&(source->data[source->offset]), &(com->data[com->offset]), source->size);
 }
 
-bool VGMCommand_contains(List* commands, VGMCommand* command)
+bool VGMCommand_contains(LList* commands, VGMCommand* command)
 {
-    int i;
+    LList* l = commands;
 
-    for(i = 0; i < commands->size; i++)
-        if (VGMCommand_isSame(getFromList(commands, i), command))
+    while(l != NULL)
+    {
+        if (VGMCommand_isSame(l->element, command))
             return true;
+
+        l = l->next;
+    }
 
     return false;
 }
 
-VGMCommand* VGMCommand_getKeyCommand(List* commands, int channel)
+VGMCommand* VGMCommand_getKeyOnCommand(LList* commands, int channel)
 {
-    int i;
+    LList* l = commands;
 
-    for(i = 0; i < commands->size; i++)
+    while(l != NULL)
     {
-        VGMCommand* command = getFromList(commands, i);
+        VGMCommand* command = l->element;
+
+        if (VGMCommand_isYM2612KeyOnWrite(command) && (VGMCommand_getYM2612KeyChannel(command) == channel))
+            return command;
+
+        l = l->next;
+    }
+
+    return NULL;
+}
+
+VGMCommand* VGMCommand_getKeyOffCommand(LList* commands, int channel)
+{
+    LList* l = commands;
+
+    while(l != NULL)
+    {
+        VGMCommand* command = l->element;
+
+        if (VGMCommand_isYM2612KeyOffWrite(command) && (VGMCommand_getYM2612KeyChannel(command) == channel))
+            return command;
+
+        l = l->next;
+    }
+
+    return NULL;
+}
+
+VGMCommand* VGMCommand_getKeyCommand(LList* commands, int channel)
+{
+    LList* l = commands;
+
+    while(l != NULL)
+    {
+        VGMCommand* command = l->element;
 
         if (VGMCommand_isYM2612KeyWrite(command) && (VGMCommand_getYM2612KeyChannel(command) == channel))
             return command;
+
+        l = l->next;
     }
 
     return NULL;
@@ -482,17 +557,16 @@ VGMCommand* VGMCommand_createYMCommand(int port, int reg, int value)
     return result;
 }
 
-List* VGMCommand_createYMCommands(int port, int baseReg, int value)
+LList* VGMCommand_createYMCommands(int port, int baseReg, int value)
 {
-    List* result;
+    LList* result;
     int ch, op;
 
-    // allocate
-    result = createList();
+    result = NULL;
 
     for (ch = 0; ch < 3; ch++)
         for (op = 0; op < 4; op++)
-            addToList(result, VGMCommand_createYMCommand(port, baseReg + ((op & 3) << 2) + (ch & 3), value));
+            result = insertAfterLList(result, VGMCommand_createYMCommand(port, baseReg + ((op & 3) << 2) + (ch & 3), value));
 
-    return result;
+    return getHeadLList(result);
 }

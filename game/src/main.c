@@ -3,7 +3,7 @@
 #include "data.h"
 #include "player.h"
 
-int main(u16 hard)
+int main(int hard)
 {
     sme_Initialize(hard);
     smeWORLD_LoadMap(&city);

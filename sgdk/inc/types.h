@@ -11,21 +11,21 @@
 #define _TYPES_H_
 
 /**
- *  \def FALSE
+ *  \brief
  *      FALSE define (equivalent to 0).
  */
 #ifndef FALSE
 #define FALSE   0
 #endif
 /**
- *  \def TRUE
+ *  \brief
  *      TRUE define (equivalent to 1).
  */
 #ifndef TRUE
 #define TRUE    1
 #endif
 /**
- *  \def NULL
+ *  \brief
  *      NULL define (equivalent to 0).
  */
 #ifndef NULL
@@ -73,93 +73,87 @@
 
 
 /**
- *  \def s8
+ *  \typedef s8
  *      8 bits signed integer (equivalent to char).
  */
-#define s8      char
+typedef char s8;
 /**
- *  \def s16
+ *  \typedef s16
  *      16 bits signed integer (equivalent to short).
  */
-#define s16     short
+typedef short s16;
 /**
- *  \def s32
+ *  \typedef s32
  *      32 bits signed integer (equivalent to long).
  */
-#define s32     long
+typedef long s32;
 
 /**
- *  \def u8
+ *  \typedef u8
  *      8 bits unsigned integer (equivalent to unsigned char).
  */
-#define u8      unsigned char
+typedef unsigned char u8;
 /**
- *  \def u16
+ *  \typedef u16
  *      16 bits unsigned integer (equivalent to unsigned short).
  */
-#define u16     unsigned short
+typedef unsigned short u16;
 /**
- *  \def u32
+ *  \typedef u32
  *      32 bits unsigned integer (equivalent to unsigned long).
  */
-#define u32     unsigned long
+typedef unsigned long u32;
 
 /**
- *  \def vs8
+ *  \typedef vs8
  *      volatile 8 bits signed integer.
  */
-#define vs8     volatile s8
+typedef volatile s8 vs8;
 /**
- *  \def vs16
+ *  \typedef vs16
  *      volatile 16 bits signed integer.
  */
-#define vs16    volatile s16
+typedef volatile s16 vs16;
 /**
- *  \def vs32
+ *  \typedef vs32
  *      volatile 32 bits signed integer.
  */
-#define vs32    volatile s32
+typedef volatile s32 vs32;
 
 /**
- *  \def vu8
+ *  \typedef vu8
  *      volatile 8 bits unsigned integer.
  */
-#define vu8     volatile u8
+typedef volatile u8 vu8;
 /**
- *  \def vu16
+ *  \typedef vu16
  *      volatile 16 bits unsigned integer.
  */
-#define vu16    volatile u16
+typedef volatile u16 vu16;
 /**
- *  \def vu32
+ *  \typedef vu32
  *      volatile 32 bits unsigned integer.
  */
-#define vu32    volatile u32
+typedef volatile u32 vu32;
 
 
-#ifndef uint8_t
+#if !defined(uint8_t) && !defined(__int8_t_defined)
 #define uint8_t     u8
-#endif
-#ifndef uint16_t
-#define uint16_t    u16
-#endif
-#ifndef uint32_t
-#define uint32_t    u32
-#endif
-#ifndef int8_t
 #define int8_t      s8
 #endif
-#ifndef int16_t
+#if !defined(uint16_t) && !defined(__int16_t_defined)
+#define uint16_t    u16
 #define int16_t     s16
 #endif
-#ifndef int32_t
+#if !defined(uint32_t) && !defined(__int32_t_defined)
+#define uint32_t    u32
 #define int32_t     s32
 #endif
 
 
 /**
  *  \typedef fix16
- *      16 bits fixed floating point type.
+ *      16 bits fixed floting point type.
  */
 typedef s16 fix16;
 /**
@@ -172,7 +166,7 @@ typedef s32 fix32;
 #define FASTCALL
 
 /**
- *  \struct Box
+ *  \brief
  *      Simple Box structure (can be used for collision detection)
  *
  *  \param x
@@ -186,14 +180,14 @@ typedef s32 fix32;
  */
 typedef struct
 {
-	u16 x;
-	u16 y;
-	u16 w;
-	u16 h;
+    u16 x;
+    u16 y;
+    u16 w;
+    u16 h;
 } Box;
 
 /**
- *  \struct Circle
+ *  \brief
  *      Simple Circle structure (can be used for collision detection)
  *
  *  \param x
@@ -205,9 +199,9 @@ typedef struct
  */
 typedef struct
 {
-	u16 x;
-	u16 y;
-	u16 ray;
+    u16 x;
+    u16 y;
+    u16 ray;
 } Circle;
 
 

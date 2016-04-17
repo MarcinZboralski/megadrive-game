@@ -18,29 +18,29 @@
 
 
 /**
- *  \def SPRITE_CACHE_SIZE
+ *  \brief
  *      Maximum number of sprite in the cache
  */
 #define SPRITE_CACHE_SIZE           128
 
 /**
- *  \def COLLISION_TYPE_NONE
+ *  \brief
  *      No collision tpye
  */
 #define COLLISION_TYPE_NONE     0
 /**
- *  \def COLLISION_TYPE_BOX
+ *  \brief
  *      Bouding box collision tpye
  */
 #define COLLISION_TYPE_BOX      1
 /**
- *  \def COLLISION_TYPE_CIRCLE
+ *  \brief
  *      Round circle collision tpye
  */
 #define COLLISION_TYPE_CIRCLE   2
 
 /**
- *  \struct VDPSprite
+ *  \brief
  *      VDP sprite definition structure replicating VDP hardware sprite.
  *
  *  \param y
@@ -54,14 +54,14 @@
  */
 typedef struct
 {
-	s16 y;
-	u16 size_link;
+    s16 y;
+    u16 size_link;
     u16 attr;
     s16 x;
 }  VDPSprite;
 
 /**
- *  \struct FrameSprite
+ *  \brief
  *      Single frame sprite definition structure close to the VDP hardware sprite.
  *
  *  \param Sprite.y
@@ -79,11 +79,11 @@ typedef struct
 typedef struct
 {
     VDPSprite vdpSprite;
-	TileSet *tileset;
+    TileSet *tileset;
 }  FrameSprite;
 
 /**
- *  \struct AnimationFrame
+ *  \brief
  *      Sprite animation frame structure.
  *
  *  \param numSprite
@@ -108,18 +108,18 @@ typedef struct
  */
 typedef struct
 {
-	u16 numSprite;
-	FrameSprite **frameSprites;
-	u16 numCollision;
-	void **collisions;
-	s16 w;
-	s16 h;
-	u8 tc;
-	u8 timer;
+    u16 numSprite;
+    FrameSprite **frameSprites;
+    u16 numCollision;
+    void **collisions;
+    s16 w;
+    s16 h;
+    u8 tc;
+    u8 timer;
 } AnimationFrame;
 
 /**
- *  \struct Animation
+ *  \brief
  *      Sprite animation structure.
  *
  *  \param numFrame
@@ -131,21 +131,19 @@ typedef struct
  *  \param sequence
  *      frame sequence animation (for instance: 0-1-2-2-1-2-3-4..)
  *  \param loop
- *      frame sequence index for loop (-1 if no loop).
- *  \param timer
- *      active time for this frame (in 1/60 of second)
+ *      frame sequence index for loop (last index if no loop)
  */
 typedef struct
 {
-	u16 numFrame;
-	AnimationFrame **frames;
-	u16 length;
-	u8 *sequence;
-	s16 loop;
+    u16 numFrame;
+    AnimationFrame **frames;
+    u16 length;
+    u8 *sequence;
+    s16 loop;
 } Animation;
 
 /**
- *  \struct SpriteDefinition
+ *  \brief
  *      Sprite definition structure.<br/>
  *      Contains all animations for a Sprite.
  *
@@ -158,13 +156,13 @@ typedef struct
  */
 typedef struct
 {
-	Palette *palette;
-	u16 numAnimation;
-	Animation **animations;
+    Palette *palette;
+    u16 numAnimation;
+    Animation **animations;
 } SpriteDefinition;
 
 /**
- *  \struct Sprite
+ *  \brief
  *      Sprite structure.<br/>
  *      Used to manage an active sprite in game condition.
  *
@@ -197,19 +195,19 @@ typedef struct
  */
 typedef struct
 {
-	SpriteDefinition *definition;
-	Animation *animation;
-	AnimationFrame *frame;
-	s16 x;
-	s16 y;
-	s16 animInd;
-	s16 frameInd;
-	s16 seqInd;
-	u16 timer;
-	u16 attribut;
-	s16 fixedIndex;
-	u32 data;
-	s32 visibility;
+    const SpriteDefinition *definition;
+    Animation *animation;
+    AnimationFrame *frame;
+    s16 x;
+    s16 y;
+    s16 animInd;
+    s16 frameInd;
+    s16 seqInd;
+    u16 timer;
+    u16 attribut;
+    s16 fixedIndex;
+    u32 data;
+    s32 visibility;
 } Sprite;
 
 
@@ -223,7 +221,7 @@ typedef struct
  *
  * Initialize the sprite engine.<br/>
  * This actually allocate memory for sprite cache and initialize the tile cache engine
- * if this is not alreay done.
+ * if this is not already done.
  */
 void SPR_init(u16 cacheSize);
 /**
@@ -326,7 +324,9 @@ void SPR_nextFrame(Sprite *sprite);
 
 /**
  *  \brief
- *      Set the VRAM tile position for this sprite.
+ *      Set the VRAM tile position for this sprite.<br/>
+ *      Use this method only if you want to manually allocate the sprite tiles in VRAM
+ *      and force a fixed position as the sprite engine does it for you by default.
  *
  *  \param sprite
  *      Sprite to set the VRAM tile position for
@@ -364,7 +364,7 @@ void SPR_setAlwaysVisible(Sprite *sprite, u16 value);
  */
 void SPR_setNeverVisible(Sprite *sprite, u16 value);
 
-///**
+// /**
 // *  \brief
 // *      Test if specified sprites are in collision.
 // *
@@ -394,9 +394,6 @@ void SPR_clear();
  *      number of sprites in the list.
  */
 void SPR_update(Sprite *sprites, u16 num);
-
-void SPR_setScrollPosition(s16 x, s16 y);
-
 
 ///**
 // *  \brief

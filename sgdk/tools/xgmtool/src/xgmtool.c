@@ -9,10 +9,18 @@
 #include "../inc/xgm.h"
 #include "../inc/xgc.h"
 
+#define SYSTEM_AUTO     -1
+#define SYSTEM_NTSC     0
+#define SYSTEM_PAL      1
 
-const char* version = "1.31";
+
+const char* version = "1.63";
+int sys;
 bool silent;
 bool verbose;
+bool sampleRateFix;
+bool sampleIgnore;
+bool delayKeyOff;
 
 
 int main(int argc, char *argv[ ])
@@ -22,7 +30,7 @@ int main(int argc, char *argv[ ])
 
     if (argc < 3)
     {
-        printf("XGMTool %s - Stephane Dallongeville - copyright 2014\n", version);
+        printf("XGMTool %s - Stephane Dallongeville - copyright 2015\n", version);
         printf("\n");
         printf("Usage: xgmtool inputFile outputFile <options>\n");
         printf("XGMTool can do the following operations:\n");
@@ -30,7 +38,9 @@ int main(int argc, char *argv[ ])
         printf("   Note that it won't work correctly on VGM file which require sub frame accurate timing.\n");
         printf(" - Convert a Sega Megadrive VGM file to XGM file\n");
         printf(" - Convert a XGM file to Sega Megadrive VGM file\n");
-        printf(" - Compile a XGM file into a binary file ready to played by the Z80 XGM driver\n");
+        printf(" - Compile a XGM file into a binary file (XGC) ready to played by the Z80 XGM driver\n");
+        printf(" - Convert a XGC binary file to XGM file (experimental)\n");
+        printf(" - Convert a XGC binary file to Sega Megadrive VGM file (experimental)\n");
         printf("\n");
         printf("Optimize VGM:\n");
         printf("  xgmtool input.vgm output.vgm\n");
@@ -49,17 +59,31 @@ int main(int argc, char *argv[ ])
         printf("  xgmtool input.xgm output.bin\n");
         printf("  xgmtool input.xgm output.xgc\n");
         printf("\n");
-        printf("The action xmgtool perform is dependant from the input and output file extension.\n");
+        printf("Convert XGC to XGM (experimental):\n");
+        printf("  xgmtool input.xgc output.xgm\n");
         printf("\n");
+        printf("Compile XGC to VGM (experimental):\n");
+        printf("  xgmtool input.xgc output.vgm\n");
+        printf("\n");
+        printf("The action xmgtool performs is dependant from the input and output file extension.\n");
         printf("Supported options:\n");
         printf("-s\tenable silent mode (no message except error and warning).\n");
         printf("-v\tenable verbose mode.\n");
+        printf("-n\tforce NTSC timing (only meaningful for VGM to XGM conversion).\n");
+        printf("-p\tforce PAL timing (only meaningful for VGM to XGM conversion).\n");
+        printf("-di\tdisable PCM sample auto ignore (it can help when PCM are not properly extracted).\n");
+        printf("-dr\tdisable PCM sample rate auto fix (it can help when PCM are not properly extracted).\n");
+        printf("-kf\tenable delayed KEY OFF event when we have KEY ON/OFF in a single frame (it can fix incorrect instrument sound).\n");
 
         exit(1);
     }
 
+    sys = SYSTEM_AUTO;
     silent = false;
     verbose = false;
+    sampleIgnore = true;
+    sampleRateFix = true;
+    delayKeyOff = false;
 
     // Open source for binary read (will fail if file does not exist)
     if ((infile = fopen(argv[1], "rb")) == NULL)
@@ -68,22 +92,40 @@ int main(int argc, char *argv[ ])
         exit(2);
     }
 
-    // Open output for write
+    // test open output for write
     if ((outfile = fopen(argv[2], "wb")) == NULL)
     {
         printf("Error: the output file %s could not be opened\n", argv[2]);
         exit(3);
     }
+    // can close
+    fclose(outfile);
 
     // options
     for(i = 3; i < argc; i++)
     {
         if (!strcasecmp(argv[i], "-s"))
+        {
             silent = true;
+            verbose = false;
+        }
         else if (!strcasecmp(argv[i], "-v"))
+        {
             verbose = true;
+            silent = false;
+        }
+        else if (!strcasecmp(argv[i], "-di"))
+            sampleIgnore = false;
+        else if (!strcasecmp(argv[i], "-dr"))
+            sampleRateFix = false;
+        else if (!strcasecmp(argv[i], "-kf"))
+            delayKeyOff = true;
+        else if (!strcasecmp(argv[i], "-n"))
+            sys = SYSTEM_NTSC;
+        else if (!strcasecmp(argv[i], "-p"))
+            sys = SYSTEM_PAL;
         else
-            printf("Warning: option %s not recognized (ignored)\n", argv[3]);
+            printf("Warning: option %s not recognized (ignored)\n", argv[i]);
     }
 
     // silent mode has priority
@@ -108,19 +150,29 @@ int main(int argc, char *argv[ ])
 
             // load file
             inData = readBinaryFile(argv[1], &inDataSize);
+            if (inData == NULL) exit(1);
             // load VGM
+            if (sys == SYSTEM_NTSC)
+                inData[0x24] = 60;
+            else if (sys == SYSTEM_PAL)
+                inData[0x24] = 50;
             vgm = VGM_create1(inData, inDataSize, 0);
+            if (vgm == NULL) exit(1);
             // optimize
             optVgm = VGM_createFromVGM(vgm, true);
+            if (optVgm == NULL) exit(1);
+
             VGM_convertWaits(optVgm);
             VGM_cleanCommands(optVgm);
             VGM_cleanSamples(optVgm);
+            VGM_fixKeyCommands(optVgm);
 
             // VGM output
             if (!strcasecmp(outExt, "VGM"))
             {
                 // get byte array
                 outData = VGM_asByteArray(optVgm, &outDataSize);
+                if (outData == NULL) exit(1);
                 // write to file
                 writeBinaryFile(outData, outDataSize, argv[2]);
             }
@@ -130,6 +182,7 @@ int main(int argc, char *argv[ ])
 
                 // convert to XGM
                 xgm = XGM_createFromVGM(optVgm);
+                if (xgm == NULL) exit(1);
 
                 // XGM output
                 if (!strcasecmp(outExt, "XGM"))
@@ -143,10 +196,12 @@ int main(int argc, char *argv[ ])
 
                     // convert to XGC (compiled XGM)
                     xgc = XGC_create(xgm);
+                    if (xgc == NULL) exit(1);
                     // get byte array
                     outData = XGC_asByteArray(xgc, &outDataSize);
                 }
 
+                if (outData == NULL) exit(1);
                 // write to file
                 writeBinaryFile(outData, outDataSize, argv[2]);
             }
@@ -170,8 +225,10 @@ int main(int argc, char *argv[ ])
 
             // load file
             inData = readBinaryFile(argv[1], &inDataSize);
+            if (inData == NULL) exit(1);
             // load XGM
             xgm = XGM_createFromData(inData, inDataSize);
+            if (xgm == NULL) exit(1);
 
             // VGM conversion
             if (!strcasecmp(outExt, "VGM"))
@@ -180,6 +237,7 @@ int main(int argc, char *argv[ ])
 
                 // convert to VGM
                 vgm = VGM_createFromXGM(xgm);
+                if (vgm == NULL) exit(1);
                 // get byte array
                 outData = VGM_asByteArray(vgm, &outDataSize);
             }
@@ -189,10 +247,12 @@ int main(int argc, char *argv[ ])
 
                 // convert to XGC (compiled XGM)
                 xgc = XGC_create(xgm);
+                if (xgc == NULL) exit(1);
                 // get byte array
                 outData = XGC_asByteArray(xgc, &outDataSize);
             }
 
+            if (outData == NULL) exit(1);
             // write to file
             writeBinaryFile(outData, outDataSize, argv[2]);
         }
@@ -202,14 +262,58 @@ int main(int argc, char *argv[ ])
             errCode = 4;
         }
     }
+    else if (!strcasecmp(inExt, "XGC"))
+    {
+        if ((!strcasecmp(outExt, "VGM")) || (!strcasecmp(outExt, "XGM")))
+        {
+            // XGC to XGM
+            int inDataSize;
+            unsigned char* inData;
+            int outDataSize;
+            unsigned char* outData;
+            XGM* xgm;
+
+            // load file
+            inData = readBinaryFile(argv[1], &inDataSize);
+            if (inData == NULL) exit(1);
+            // load XGM
+            xgm = XGM_createFromXGCData(inData, inDataSize);
+            if (xgm == NULL) exit(1);
+
+            // VGM conversion
+            if (!strcasecmp(outExt, "VGM"))
+            {
+                VGM* vgm;
+
+                // convert to VGM
+                vgm = VGM_createFromXGM(xgm);
+                if (vgm == NULL) exit(1);
+                // get byte array
+                outData = VGM_asByteArray(vgm, &outDataSize);
+            }
+            else
+            {
+                // get byte array
+                outData = XGM_asByteArray(xgm, &outDataSize);
+            }
+
+            if (outData == NULL) exit(1);
+            // write to file
+            writeBinaryFile(outData, outDataSize, argv[2]);
+        }
+        else
+        {
+            printf("Error: the output file %s is incorrect (should be a XGM or VGM file)\n", argv[2]);
+            errCode = 4;
+        }
+    }
     else
     {
-        printf("Error: the input file %s is incorrect (should be a VGM or XGM file)\n", argv[1]);
+        printf("Error: the input file %s is incorrect (should be a VGM, XGM or XGC file)\n", argv[1]);
         errCode = 4;
     }
 
     fclose(infile);
-    fclose(outfile);
 
     remove("tmp.bin");
 

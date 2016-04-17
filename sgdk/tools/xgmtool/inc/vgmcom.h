@@ -20,7 +20,8 @@
 #define VGM_STREAM_STOP         0x94
 #define VGM_STREAM_START        0x95
 
-#define VGM_LOOP                0x30
+#define VGM_LOOP_START          0x30
+#define VGM_LOOP_END            0x31
 
 
 typedef struct
@@ -29,6 +30,7 @@ typedef struct
     int offset;
     int command;
     int size;
+    int time;
 } VGMCommand;
 
 
@@ -36,8 +38,8 @@ typedef struct
 #include "util.h"
 
 
-VGMCommand* VGMCommand_create(int command);
-VGMCommand* VGMCommand_createEx(unsigned char* data, int offset);
+VGMCommand* VGMCommand_create(int command, int time);
+VGMCommand* VGMCommand_createEx(unsigned char* data, int offset, int time);
 
 bool VGMCommand_isDataBlock(VGMCommand* source);
 int VGMCommand_getDataBankId(VGMCommand* source);
@@ -45,7 +47,8 @@ int VGMCommand_getDataBlockLen(VGMCommand* source);
 bool VGMCommand_isSeek(VGMCommand* source);
 int VGMCommand_getSeekAddress(VGMCommand* source);
 bool VGMCommand_isEnd(VGMCommand* source);
-bool VGMCommand_isLoop(VGMCommand* source);
+bool VGMCommand_isLoopStart(VGMCommand* source);
+bool VGMCommand_isLoopEnd(VGMCommand* source);
 bool VGMCommand_isPCM(VGMCommand* source);
 bool VGMCommand_isWait(VGMCommand* source);
 bool VGMCommand_isWaitNTSC(VGMCommand* source);
@@ -66,10 +69,14 @@ int VGMCommand_getYM2612Register(VGMCommand* source);
 int VGMCommand_getYM2612Value(VGMCommand* source);
 bool VGMCommand_isYM2612KeyWrite(VGMCommand* source);
 bool VGMCommand_isYM2612KeyOffWrite(VGMCommand* source);
+bool VGMCommand_isYM2612KeyOnWrite(VGMCommand* source);
 int VGMCommand_getYM2612KeyChannel(VGMCommand* source);
 bool VGMCommand_isYM26120x2XWrite(VGMCommand* source);
 bool VGMCommand_isYM2612TimersWrite(VGMCommand* source);
 bool VGMCommand_isYM2612TimersNoSpecialNoCSMWrite(VGMCommand* source);
+bool VGMCommand_isDACEnabled(VGMCommand* source);
+bool VGMCommand_isDACEnabledON(VGMCommand* source);
+bool VGMCommand_isDACEnabledOFF(VGMCommand* source);
 bool VGMCommand_isStream(VGMCommand* source);
 bool VGMCommand_isStreamControl(VGMCommand* source);
 bool VGMCommand_isStreamData(VGMCommand* source);
@@ -85,10 +92,12 @@ int VGMCommand_getStreamSampleAddress(VGMCommand* source);
 int VGMCommand_getStreamSampleSize(VGMCommand* source);
 bool VGMCommand_isSame(VGMCommand* source, VGMCommand* com);
 
-bool VGMCommand_contains(List* commands, VGMCommand* command);
-VGMCommand* VGMCommand_getKeyCommand(List* commands, int channel);
+bool VGMCommand_contains(LList* commands, VGMCommand* command);
+VGMCommand* VGMCommand_getKeyOnCommand(LList* commands, int channel);
+VGMCommand* VGMCommand_getKeyOffCommand(LList* commands, int channel);
+VGMCommand* VGMCommand_getKeyCommand(LList* commands, int channel);
 VGMCommand* VGMCommand_createYMCommand(int port, int reg, int value);
-List* VGMCommand_createYMCommands(int port, int baseReg, int value);
+LList* VGMCommand_createYMCommands(int port, int baseReg, int value);
 
 
 #endif // VGMCOM_H_

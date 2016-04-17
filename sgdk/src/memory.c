@@ -262,24 +262,6 @@ void* MEM_alloc(u16 size)
     return p;
 }
 
-void* MEM_realloc(void* ptr, u16 old_size, u16 new_size)
-{
-    if (new_size==old_size)
-        return ptr;
-    void* buffer = NULL;
-    if (new_size>0)
-        buffer = MEM_alloc(new_size);
-    if (ptr!=NULL)
-    {
-        if (new_size>0)
-        {
-            int size = new_size<old_size?new_size:old_size;
-            memcpy(buffer, ptr, size);
-        }
-        MEM_free(ptr);
-    }
-    return buffer;
-}
 
 /*
  * Pack free block and return first matching free block.
@@ -370,14 +352,6 @@ static u16* pack(u16 nsize)
 //    KDebug_AlertNumber(memfree);
 //}
 
-void memcpy_bytes(void *to, const void *from, int len)
-{
-    const char* in = (const char*)from;
-    char* out = (char*)to;
-    int i;
-    for (i=0 ; i<len ; ++i)
-        *out++ = *in++;
-}
 
 void memcpyU16(u16 *to, const u16 *from, u16 len)
 {

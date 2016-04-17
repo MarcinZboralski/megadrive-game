@@ -110,6 +110,7 @@ static int execute(char *info, FILE *fs, FILE *fh)
     }
 
     sprDef = getSpriteDefinition(data, wt, ht, wf, hf, time, collid);
+    if (!sprDef) return FALSE;
 
     //TODO: optimize
     removeEmptyFrame(sprDef);
@@ -270,10 +271,8 @@ void outAnimFrame(animFrame_* animFrame, FILE* fs, FILE* fh, char* id, int globa
     fprintf(fs, "    dc.w    %d\n", animFrame->w * 8);
     // frame height
     fprintf(fs, "    dc.w    %d\n", animFrame->h * 8);
-    // collision type info
-    fprintf(fs, "    dc.b    %d\n", animFrame->tc);
-    // timer info
-    fprintf(fs, "    dc.b    %d\n", animFrame->timer);
+    // collision type info & timer info
+    fprintf(fs, "    dc.w    %d\n", (animFrame->tc << 8) | animFrame->timer);
     fprintf(fs, "\n");
 }
 

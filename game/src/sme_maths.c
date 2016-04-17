@@ -8,11 +8,6 @@ const fix32 fPI74 = FIX32(PI*7.0f/4.0f);
 const fix32 fPIo4 = FIX32(PI/4.0f);
 const fix32 fSQRT2 = FIX32(1.41421f);
 
-fix32 abs(fix32 v)
-{
-    return v<0?-v:v;
-}
-
 fix32 cos(fix32 a)
 {
     s16 v = fix32ToInt(fix32Div(fix32Mul(a, FIX32(512.0f)), fPI));

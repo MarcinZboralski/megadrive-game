@@ -23,8 +23,11 @@
 #include "sme_component_controller_dumb.h"
 
 
-void sme_Initialize(u16 hard);
+void sme_Initialize(int hard);
 void sme_Finalize();
 void sme_Update();
+
+void* MEM_realloc(void* ptr, u16 old_size, u16 new_size);
+void memcpy_bytes(void *to, const void *from, int len);
 
 #endif

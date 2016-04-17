@@ -376,7 +376,7 @@
             endm
 
             macro   wait7
-            LD      A, (DE)
+            LD      A, $0
             endm
 
             macro   wait8
@@ -1194,6 +1194,11 @@
 
             macro   wait210
             wait2p16x 13
+            endm
+
+            macro   wait218
+            wait210
+            wait8
             endm
 
             macro   wait226

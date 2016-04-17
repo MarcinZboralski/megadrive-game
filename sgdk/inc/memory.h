@@ -22,51 +22,51 @@
 
 
 /**
- *  \def STACK_SIZE
+ *  \brief
  *      Define memory allocated for stack (default = 0x400).
  */
 #define STACK_SIZE      0x400
 /**
- *  \def MEMORY_HIGH
+ *  \brief
  *      Define the memory high address limit for dynamic allocation
  */
 #define MEMORY_HIGH     (0x01000000 - STACK_SIZE)
 
 
 /**
- *  \def GET_DWORDFROMPBYTE
+ *  \brief
  *      Get u32 from u8 array (BigEndian order).
  */
 #define GET_DWORDFROMPBYTE(src)     ((src[0] << 24) | (src[1] << 16) | (src[2] << 8) | (src[3] << 0))
 /**
- *  \def GET_DWORDFROMPBYTE_LI
+ *  \brief
  *      Get u32 from u8 array (LittleEndian order).
  */
 #define GET_DWORDFROMPBYTE_LI(src)  ((src[0] << 0) | (src[1] << 8) | (src[2] << 16) | (src[3] << 24))
 /**
- *  \def GET_WORDFROMPBYTE
+ *  \brief
  *      Get u16 from u8 array (BigEndian order).
  */
 #define GET_WORDFROMPBYTE(src)      ((src[0] << 8) | (src[1] << 0))
 /**
- *  \def GET_WORDFROMPBYTE_LI
+ *  \brief
  *      Get u16 from u8 array (LittleEndian order).
  */
 #define GET_WORDFROMPBYTE_LI(src)   ((src[0] << 0) | (src[1] << 8))
 /**
- *  \def GET_DWORDFROMPWORD
+ *  \brief
  *      Get u32 from u16 array (BigEndian order).
  */
 #define GET_DWORDFROMPWORD(src)     ((src[0] << 16) | (src[1] << 0))
 /**
- *  \def GET_DWORDFROMPWORD_LI
+ *  \brief
  *      Get u32 from u16 array (LittleEndian order).
  */
 #define GET_DWORDFROMPWORD_LI(src)  ((src[0] << 0) | (src[1] << 16))
 
 
 /**
- *  \def SWAP_u8
+ *  \brief
  *      Exchange value of specified u8 variables.
  */
 #define SWAP_u8(x, y)       \
@@ -79,7 +79,7 @@
 }
 
 /**
- *  \def SWAP_s8
+ *  \brief
  *      Exchange value of specified s8 variables.
  */
 #define SWAP_s8(x, y)       \
@@ -92,7 +92,7 @@
 }
 
 /**
- *  \def SWAP_u16
+ *  \brief
  *      Exchange value of specified u16 variables.
  */
 #define SWAP_u16(x, y)      \
@@ -105,7 +105,7 @@
 }
 
 /**
- *  \def SWAP_s16
+ *  \brief
  *      Exchange value of specified s16 variables.
  */
 #define SWAP_s16(x, y)      \
@@ -118,7 +118,7 @@
 }
 
 /**
- *  \def SWAP_u32
+ *  \brief
  *      Exchange value of specified u32 variables.
  */
 #define SWAP_u32(x, y)      \
@@ -131,7 +131,7 @@
 }
 
 /**
- *  \def SWAP_s32
+ *  \brief
  *      Exchange value of specified s32 variables.
  */
 #define SWAP_s32(x, y)      \
@@ -181,8 +181,6 @@ void MEM_free(void *ptr);
  * The content of the newly allocated block of memory is not initialized, remaining with indeterminate values.
  */
 void* MEM_alloc(u16 size);
-
-void* MEM_realloc(void* ptr, u16 old_size, u16 new_size);
 
 
 /**
@@ -242,9 +240,6 @@ void memsetU32(u32 *to, u32 value, u16 len);
  * The underlying type of the objects pointed by both the source and destination pointers are irrelevant for this function; The result is a binary copy of the data.
  */
 void memcpy(void *to, const void *from, u16 len);
-
-void memcpy_bytes(void *to, const void *from, int len);
-
 /**
  *  \deprecated Uses memcpy(void *to, const void *from, u16 len) instead.
  */
@@ -281,5 +276,3 @@ void fastMemcpyU32(u32 *to, const u32 *from, u16 len);
 
 
 #endif // _MEMORY_H_
-
-

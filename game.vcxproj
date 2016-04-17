@@ -121,6 +121,7 @@
     <ClCompile Include="game\src\sme_vdp.c" />
     <ClCompile Include="game\src\sme_world.c" />
     <ClCompile Include="sgdk\src\bmp.c" />
+    <ClCompile Include="sgdk\src\dma.c" />
     <ClCompile Include="sgdk\src\everdrive.c" />
     <ClCompile Include="sgdk\src\fat16.c" />
     <ClCompile Include="sgdk\src\joy.c" />
@@ -153,6 +154,7 @@
     <ClCompile Include="sgdk\src\ym2612.c" />
     <ClCompile Include="sgdk\src\z80_ctrl.c" />
     <ClCompile Include="sgdk\src\z80_vgm.c" />
+    <ClCompile Include="sgdk\src\zlib.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\src\player.h" />
@@ -184,6 +186,7 @@
     <ClInclude Include="sgdk\inc\asm.h" />
     <ClInclude Include="sgdk\inc\bmp.h" />
     <ClInclude Include="sgdk\inc\config.h" />
+    <ClInclude Include="sgdk\inc\dma.h" />
     <ClInclude Include="sgdk\inc\everdrive.h" />
     <ClInclude Include="sgdk\inc\fat16.h" />
     <ClInclude Include="sgdk\inc\font.h" />
@@ -222,7 +225,6 @@
     <ClInclude Include="sgdk\src\z80_drv1.h" />
     <ClInclude Include="sgdk\src\z80_drv2.h" />
     <ClInclude Include="sgdk\src\z80_drv3.h" />
-    <ClInclude Include="sgdk\src\z80_drv4.h" />
     <ClInclude Include="sgdk\src\z80_mvs.h" />
     <ClInclude Include="sgdk\src\z80_tfm.h" />
     <ClInclude Include="sgdk\src\z80_xgm.h" />
