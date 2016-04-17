@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="slz">
+      <UniqueIdentifier>{935ba66f-3c72-4172-8030-e05107cbcc96}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\slz\slz.cpp">
+      <Filter>slz</Filter>
+    </ClCompile>
+    <ClCompile Include="src\compiler.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\slz\slz.h">
+      <Filter>slz</Filter>
+    </ClInclude>
+    <ClInclude Include="src\compiler.h" />
+  </ItemGroup>
+</Project>
