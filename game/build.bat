@@ -1,4 +1,5 @@
 @echo off
+cd game
 ..\compiler\bin\compiler.exe %CD%\data\
 set GAME_PATH=%CD:\=/%
 cd ..
@@ -12,3 +13,4 @@ set PATH=%GDK_WIN%\bin;%PATH%
 cd %GAME_PATH%
 make -f makefile.gen
 set PATH=%OLD_PATH%
+cd ..

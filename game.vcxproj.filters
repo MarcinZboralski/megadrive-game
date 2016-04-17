@@ -1,0 +1,410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="game">
+      <UniqueIdentifier>{e308ae2d-8638-4724-8f40-4005b9e2e562}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\slz">
+      <UniqueIdentifier>{b129f748-30fb-47dd-9abe-255eb54406c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sgdk">
+      <UniqueIdentifier>{be31a269-5f3d-4f1b-983c-ebe9dc78ae2b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="game\src\main.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\player.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_bitmap.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_camera.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_component_controller.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_component_controller_dumb.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_component_controller_pad.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_component_controller_pad_human.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_component_controller_pad_vehicle.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_component_graphics.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_component_physics.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_component_physics_human.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_component_physics_vehicle.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_component_transform.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_entity.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_input.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_map.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_maths.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_sound.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_sprite.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_time.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_vdp.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\sme_world.c">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\src\slz.c">
+      <Filter>game\slz</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\bmp.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\everdrive.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\fat16.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\joy.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\maths.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\maths3D.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\memory.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\psg.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\sound.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\sprite_eng.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\sram.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\string.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\sys.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\tab_cnv.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\tab_log2.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\tab_log10.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\tab_sin.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\tab_sqrt.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\tab_vol.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\tfcplay.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\tile_cache.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\timer.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\tools.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\types.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\vdp.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\vdp_bg.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\vdp_dma.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\vdp_pal.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\vdp_spr.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\vdp_tile.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\ym2612.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\z80_ctrl.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="sgdk\src\z80_vgm.c">
+      <Filter>sgdk</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="game\src\player.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_bitmap.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_camera.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_component.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_component_base.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_component_controller.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_component_controller_dumb.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_component_controller_pad.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_component_controller_pad_human.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_component_controller_pad_vehicle.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_component_graphics.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_component_physics.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_component_physics_human.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_component_physics_vehicle.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_component_transform.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_entity.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_input.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_map.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_maths.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_sound.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_sprite.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_time.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_vdp.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\sme_world.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\src\slz.h">
+      <Filter>game\slz</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\asm.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\bmp.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\config.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\everdrive.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\fat16.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\font.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\genesis.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\genres.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\joy.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\kdebug.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\maths.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\maths3D.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\memory.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\psg.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\smp_null.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\smp_null_pcm.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\sound.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\sprite_eng.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\sram.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\string.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\sys.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\tab_cnv.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\tab_vol.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\tfcplay.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\tile_cache.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\timer.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\tools.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\types.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\vdp.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\vdp_bg.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\vdp_dma.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\vdp_pal.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\vdp_spr.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\vdp_tile.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\ym2612.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\z80_ctrl.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\z80_mvsc.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\inc\z80_vgm.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\src\z80_drv1.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\src\z80_drv2.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\src\z80_drv3.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\src\z80_drv4.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\src\z80_mvs.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\src\z80_tfm.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sgdk\src\z80_xgm.h">
+      <Filter>sgdk</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="game\src\slz_a.s">
+      <Filter>game\slz</Filter>
+    </None>
+  </ItemGroup>
+</Project>

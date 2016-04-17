@@ -1,6 +1,7 @@
+.vs/
 out/
 *.o
-*.vcproj.*.*.user
+*.vcxproj.*.*.user
 *.ncb
 *.suo
 *.pdb
