@@ -15,15 +15,6 @@
 #define VISIBILITY_ALWAYS_ON    (VISIBILITY_ALWAYS_FLAG | 0x3FFFFFFF)
 #define VISIBILITY_ALWAYS_OFF   (VISIBILITY_ALWAYS_FLAG | 0x00000000)
 
-s16 SPR_ScrollX = 0;
-s16 SPR_ScrollY = 0;
-
-void SPR_setScrollPosition(s16 x, s16 y)
-{
-    SPR_ScrollX = x;
-    SPR_ScrollY = y;
-}
-
 // forward
 static void computeVisibility(Sprite *sprite);
 static void setFrame(Sprite *sprite, AnimationFrame *frame);
@@ -81,8 +72,8 @@ u16 SPR_isInitialized()
 void SPR_initSprite(Sprite *sprite, SpriteDefinition *spriteDef, s16 x, s16 y, u16 attribut)
 {
     sprite->definition = spriteDef;
-    sprite->x = x + (0x80+SPR_ScrollX);
-    sprite->y = y + (0x80+SPR_ScrollY);
+    sprite->x = x + 0x80;
+    sprite->y = y + 0x80;
     sprite->animInd = -1;
     sprite->frameInd = -1;
     sprite->seqInd = -1;
@@ -278,7 +269,7 @@ void SPR_update(Sprite *sprites, u16 num)
                 frameSprites = frame->frameSprites;
 
                 // need update ?
-                if (visibility == -1)
+                //if (visibility == -1)
                 {
                     computeVisibility(sprite);
                     visibility = sprite->visibility;
@@ -358,10 +349,10 @@ void SPR_update(Sprite *sprites, u16 num)
                         if (attr & TILE_ATTR_VFLIP_MASK)
                         {
                             s16 sh = ((frameSprite->vdpSprite.size_link & 0x0300) >> 5) + 8;
-                            cache->y = sprite->y + SPR_ScrollY + (fh - (frameSprite->vdpSprite.y + sh));
+                            cache->y = sprite->y + (fh - (frameSprite->vdpSprite.y + sh));
                         }
                         else
-                            cache->y = sprite->y + SPR_ScrollY + frameSprite->vdpSprite.y;
+                            cache->y = sprite->y + frameSprite->vdpSprite.y;
 
                         cache->size_link = frameSprite->vdpSprite.size_link | ++ind;
                         cache->attr = (frameSprite->vdpSprite.attr ^ attr) +
@@ -370,10 +361,10 @@ void SPR_update(Sprite *sprites, u16 num)
                         if (attr & TILE_ATTR_HFLIP_MASK)
                         {
                             s16 sw = ((frameSprite->vdpSprite.size_link & 0x0C00) >> 7) + 8;
-                            cache->x = sprite->x + SPR_ScrollX + (fw - (frameSprite->vdpSprite.x + sw));
+                            cache->x = sprite->x + (fw - (frameSprite->vdpSprite.x + sw));
                         }
                         else
-                            cache->x = sprite->x + SPR_ScrollX + frameSprite->vdpSprite.x;
+                            cache->x = sprite->x + frameSprite->vdpSprite.x;
 
                         cache++;
                     }
@@ -394,10 +385,10 @@ void SPR_update(Sprite *sprites, u16 num)
                         if (attr & TILE_ATTR_VFLIP_MASK)
                         {
                             s16 sh = ((frameSprite->vdpSprite.size_link & 0x0300) >> 5) + 8;
-                            cache->y = sprite->y + SPR_ScrollY + (fh - (frameSprite->vdpSprite.y + sh));
+                            cache->y = sprite->y + (fh - (frameSprite->vdpSprite.y + sh));
                         }
                         else
-                            cache->y = sprite->y + SPR_ScrollY + frameSprite->vdpSprite.y;
+                            cache->y = sprite->y + frameSprite->vdpSprite.y;
 
                         cache->size_link = frameSprite->vdpSprite.size_link | ++ind;
                         cache->attr = (frameSprite->vdpSprite.attr ^ attr) + vramInd;
@@ -405,10 +396,10 @@ void SPR_update(Sprite *sprites, u16 num)
                         if (attr & TILE_ATTR_HFLIP_MASK)
                         {
                             s16 sw = ((frameSprite->vdpSprite.size_link & 0x0C00) >> 7) + 8;
-                            cache->x = sprite->x + SPR_ScrollX + (fw - (frameSprite->vdpSprite.x + sw));
+                            cache->x = sprite->x + (fw - (frameSprite->vdpSprite.x + sw));
                         }
                         else
-                            cache->x = sprite->x + SPR_ScrollX + frameSprite->vdpSprite.x;
+                            cache->x = sprite->x + frameSprite->vdpSprite.x;
 
                         cache++;
                     }
@@ -468,8 +459,8 @@ void computeVisibility(Sprite *sprite)
     u16 attr;
     u16 i;
 
-    xmin = 0x80 - (sprite->x+SPR_ScrollX);
-    ymin = 0x80 - (sprite->y+SPR_ScrollY);
+    xmin = 0x80 - sprite->x;
+    ymin = 0x80 - sprite->y;
     xmax = screenWidth + xmin;
     ymax = screenHeight + ymin;
     fw = frame->w;

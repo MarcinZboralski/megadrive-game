@@ -94,7 +94,7 @@ void smeCAMERA_Render()
     
     smeCamera_ScrollX = smeSCREEN_Width2-fix32ToInt(smeCamera_PositionX);
     smeCamera_ScrollY = fix32ToInt(smeCamera_PositionY)-smeSCREEN_Height2;
-    SPR_setScrollPosition(smeSCREEN_Width2-fix32ToInt(smeCamera_PositionX), smeSCREEN_Height2-fix32ToInt(smeCamera_PositionY));
+	smeSPRITES_SetScrollPosition(smeSCREEN_Width2-fix32ToInt(smeCamera_PositionX), smeSCREEN_Height2-fix32ToInt(smeCamera_PositionY));
 }
 
 void smeCAMERA_UpdateScrolling()

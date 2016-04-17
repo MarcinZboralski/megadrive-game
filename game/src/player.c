@@ -45,22 +45,22 @@ void TAKE_VEHICLES_BEHAVIOUR_Update(smeEntity* entity, void* component)
             fix32 distance;
             smeEntity* target = smeWORLD_FindNearestEntity(&distance, entity);
             if (distance<FIX32(30.0f) && target->Graphics->Sprite->Source==&truck)
-            {
+            {/*
                 entity->Transform->PositionX = target->Transform->PositionX;
                 entity->Transform->PositionY = target->Transform->PositionY;
                 entity->Transform->Rotation = target->Transform->Rotation;
                 
                 smeENTITY_RemoveComponent(entity, entity->Physics);
+				smeENTITY_RemoveComponent(entity, entity->Controller);
+				smeENTITY_RemoveComponent(entity, entity->Graphics);
+
                 smePHYSICS_VEHICLE_Create(entity);
-                
-                smeENTITY_RemoveComponent(entity, entity->Controller);
                 smeCONTROLLER_PAD_VEHICLE_Create(entity);
-                
-                smeENTITY_RemoveComponent(entity, entity->Graphics);
                 smeGRAPHICS_Create(entity, target->Graphics->Sprite->Source, target->Graphics->Width, target->Graphics->Height, PAL3);
-                smeCAMERA_Attach(entity);                
-                
-                smeWORLD_DestroyEntity(target);
+                */
+
+				smeENTITY_RemoveComponent(target, target->Graphics);
+                //smeWORLD_DestroyEntity(target);
             }
         }
         else
@@ -71,14 +71,12 @@ void TAKE_VEHICLES_BEHAVIOUR_Update(smeEntity* entity, void* component)
             smePHYSICS_VEHICLE_Create(car);
             
             smeENTITY_RemoveComponent(entity, entity->Physics);
-            smePHYSICS_HUMAN_Create(entity);
-            
-            smeENTITY_RemoveComponent(entity, entity->Controller);
+			smeENTITY_RemoveComponent(entity, entity->Controller);
+			smeENTITY_RemoveComponent(entity, entity->Graphics);
+
+			smePHYSICS_HUMAN_Create(entity);
             smeCONTROLLER_PAD_HUMAN_Create(entity);
-            
-            smeENTITY_RemoveComponent(entity, entity->Graphics);
             smeGRAPHICS_Create(entity, &man, 16, 16, PAL2);
-            smeCAMERA_Attach(entity);
         }
     }
 }

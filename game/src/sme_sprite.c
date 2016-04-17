@@ -8,6 +8,8 @@
 Sprite smeGraphicsSprites[smeWORLD_MAXIMUM_ENTITY_COUNT];
 smeSprite* smeSprites[smeWORLD_MAXIMUM_ENTITY_COUNT];
 int smeSpritesCount;
+s16 smeSpritesScrollX = 0;
+s16 smeSpritesScrollY = 0;
 
 void smeSPRITES_Initialize()
 {
@@ -33,6 +35,12 @@ void smeSPRITES_Render()
     SPR_update(smeGraphicsSprites, smeWORLD_MAXIMUM_ENTITY_COUNT);
 }
 
+void smeSPRITES_SetScrollPosition(s16 x, s16 y)
+{
+	smeSpritesScrollX = x;
+	smeSpritesScrollY = y;
+}
+
 smeSprite* smeSPRITE_Create(const SpriteDefinition* source, u8 palette)
 {
     if (smeSpritesCount>=smeWORLD_MAXIMUM_ENTITY_COUNT)
@@ -46,8 +54,8 @@ smeSprite* smeSPRITE_Create(const SpriteDefinition* source, u8 palette)
     while (smeGraphicsSprites[sprite->GraphicsID].visibility!=VISIBILITY_ALWAYS_OFF)
         ++sprite->GraphicsID;
     
-    sprite->PositionX = 0;
-    sprite->PositionY = 0;
+    sprite->PositionX = smeSpritesScrollX;
+    sprite->PositionY = smeSpritesScrollY;
     sprite->Source = (SpriteDefinition*)source;
     sprite->Palette = palette;
     sprite->Animation = 0;
@@ -62,15 +70,15 @@ smeSprite* smeSPRITE_Create(const SpriteDefinition* source, u8 palette)
 
 void smeSPRITE_Destroy(smeSprite* sprite)
 {
-    --smeSpritesCount;
+    //--smeSpritesCount;
     smeGraphicsSprites[sprite->GraphicsID].visibility = VISIBILITY_ALWAYS_OFF;
-    u8 i;
+    /*u8 i;
     for (i=sprite->ID ; i<smeSpritesCount ; ++i)
     {
         smeSprites[i] = smeSprites[i+1];
         smeSprites[i]->ID = i;
     }
-    MEM_free(sprite);
+    MEM_free(sprite);*/
 }
 
 void smeSPRITE_Update(smeSprite* sprite)
@@ -78,5 +86,5 @@ void smeSPRITE_Update(smeSprite* sprite)
     Sprite* graphics = smeGraphicsSprites+sprite->GraphicsID;
     SPR_setAttribut(graphics, TILE_ATTR(sprite->Palette, sprite->Priority, FALSE, sprite->Mirrored));
     SPR_setAnim(graphics, sprite->Animation);        
-    SPR_setPosition(graphics, sprite->PositionX, sprite->PositionY);
+    SPR_setPosition(graphics, sprite->PositionX+smeSpritesScrollX, sprite->PositionY+smeSpritesScrollY);
 }

@@ -19,6 +19,7 @@ typedef struct
 void smeSPRITES_Initialize();
 void smeSPRITES_Finalize();
 void smeSPRITES_Render();
+void smeSPRITES_SetScrollPosition(s16 x, s16 y);
 
 smeSprite* smeSPRITE_Create(const SpriteDefinition* source, u8 palette);
 void smeSPRITE_Destroy(smeSprite* sprite);

@@ -24,7 +24,7 @@ void smeGRAPHICS_Update(smeEntity* entity, void* component)
 {
     smeGraphics* graphics = entity->Graphics;
     smeTransform* transform = entity->Transform;
-    
+
     u8 animation_count = graphics->Sprite->Source->numAnimation;
     u8 animation = fix32ToInt(fix32Div(fix32Mul(clamp_angle2(transform->Rotation), intToFix32(animation_count+1)), fPI2));
     graphics->Sprite->Animation = smeMOD(animation, animation_count);

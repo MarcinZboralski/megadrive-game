@@ -235,7 +235,7 @@ void SYS_enableInts();
  * \see SYS_setVIntCallback(_voidCallback *CB);
  * \see SYS_setHIntCallback(_voidCallback *CB);
  */
-void SYS_setPreVIntCallback(_voidCallback *CB);
+void SYS_setVIntPreCallback(_voidCallback *CB);
 /**
  *  \brief
  *      Set 'Vertical Interrupt' callback method.

@@ -17,7 +17,7 @@ void smeVDP_Initialize()
     VDP_setHilightShadow(0);
     VDP_setScreenWidth320(); 
     VDP_setScrollingMode(HSCROLL_PLANE, VSCROLL_PLANE);
-    SYS_setVIntCallback(smeCAMERA_UpdateScrolling);
+	SYS_setVIntPreCallback(smeCAMERA_UpdateScrolling);
     
     smeSCREEN_Width2 = screenWidth>>1;
     smeSCREEN_Height2 = screenHeight>>1;
