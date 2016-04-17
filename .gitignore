@@ -1,0 +1,11 @@
+out/
+*.o
+*.vcproj.*.*.user
+*.ncb
+*.suo
+*.pdb
+*.ilk
+compiler/tmp/
+game/data/data.c
+game/data/data.h
+game/res/resources.h
